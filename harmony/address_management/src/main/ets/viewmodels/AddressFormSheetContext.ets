@@ -1,0 +1,33 @@
+import { Operation } from '../common/CustomTypes';
+import { AddressDTO } from '../models/AddressDTO';
+import { AddressVM } from './AddressVM';
+
+@ObservedV2
+export class AddressFormSheetContext {
+  @Trace
+  public title: string = '';
+  @Trace
+  public address: AddressVM = new AddressVM();
+  @Trace
+  public operation: Operation = Operation.EDIT;
+  @Trace
+  public isOpen: boolean = false;
+  @Trace
+  public sheetType: SheetType = SheetType.BOTTOM;
+  @Trace
+  public onWillSpringBackWhenDismiss: Callback<SpringBackAction> = (action: SpringBackAction) => action.springBack();
+  @Trace
+  public onWillDismiss: (reason: DismissReason, hasChange: boolean) => void = () => {
+  };
+  @Trace
+  public onAddressListUpdate: Callback<void> = () => {
+  };
+  @Trace
+  public close: () => void = () => {
+  };
+
+  public setOnAddressListUpdate(callback?: (address: AddressDTO) => void) {
+
+    return this;
+  }
+}
