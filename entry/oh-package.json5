@@ -1,0 +1,22 @@
+{
+  "name": "entry",
+  "version": "1.0.0",
+  "description": "Please describe the basic information.",
+  "main": "",
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "navigation": "file:../core/navigation",
+    "util": "file:../core/util",
+    "ui": "file:../core/ui",
+    "ibestui": "file:../core/ibestui",
+    "state": "file:../core/state",
+    "designsystem": "file:../core/designsystem",
+    "main": "file:../feature/main",
+    "database": "file:../core/database",
+    "auth": "file:../feature/auth",
+    "user": "file:../feature/user",
+    "demo": "file:../feature/demo",
+  }
+}
+
