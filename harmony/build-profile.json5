@@ -5,13 +5,39 @@
         "name": "default",
         "type": "HarmonyOS",
         "material": {
-          "certpath": "C:\\Users\\38450\\.ohos\\config\\default_harmony_I2Ngu2NtzmqcyDMO4o74h7fJSqGF4uotIC06qHuEOs4=.cer",
+          "certpath": "C:\\Users\\admin\\.ohos\\config\\default_harmony_ZqL01_w2RY4-70aSDqPT8gINirOC_jVqoAVwZYF60Zg=.cer",
           "keyAlias": "debugKey",
-          "keyPassword": "0000001BC2871C395B10C2C06C4A99E348966AE6C305D40929BA249CEE5696506F2A4A942C03E5D02A2085",
-          "profile": "C:\\Users\\38450\\.ohos\\config\\default_harmony_I2Ngu2NtzmqcyDMO4o74h7fJSqGF4uotIC06qHuEOs4=.p7b",
+          "keyPassword": "0000001B6CBB65603AD4EBA6BB8D845ADA6945B18633EF735F8DA06EC49F5CE757303EBF15121E4159A212",
+          "profile": "C:\\Users\\admin\\.ohos\\config\\default_harmony_ZqL01_w2RY4-70aSDqPT8gINirOC_jVqoAVwZYF60Zg=.p7b",
           "signAlg": "SHA256withECDSA",
-          "storeFile": "C:\\Users\\38450\\.ohos\\config\\default_harmony_I2Ngu2NtzmqcyDMO4o74h7fJSqGF4uotIC06qHuEOs4=.p12",
-          "storePassword": "0000001BB8422D52A5605ED91262290A76FA54DC55B2731162587A156C2F45AC1509D533DEFA127BAABDE3"
+          "storeFile": "C:\\Users\\admin\\.ohos\\config\\default_harmony_ZqL01_w2RY4-70aSDqPT8gINirOC_jVqoAVwZYF60Zg=.p12",
+          "storePassword": "0000001BB42748F265BEDC04B1BD8AD3ECCA9556D422FCEE77D11247236403DB0F16696ADBDD8E02BA55AC"
+        }
+      },
+      {
+        "name": "release",
+        "type": "HarmonyOS",
+        "material": {
+          "storeFile": "D:/RN/cert/release/release_UNI26087E9.p12",
+          "storePassword": "00000018BEC0CC6C920F3E8515F927BBF9FE3A3A27C847E33646C9F7630961DC67AF2722262E5AB3",
+          "keyAlias": "releaseKey",
+          "keyPassword": "0000001868F3E3BB32E66E209793F91259AED3E6B733A2E19C4F512665EF0ADE6F98C0196D7A6F9D",
+          "signAlg": "SHA256withECDSA",
+          "profile": "D:/RN/cert/release/release_UNI26087E9Release.p7b",
+          "certpath": "D:/RN/cert/release/release_UNI26087E9.cer"
+        }
+      },
+      {
+        "name": "ReleaseAPI",
+        "type": "HarmonyOS",
+        "material": {
+          "storeFile": "D:/RN/cert/release/release_UNI26087E9.p12",
+          "storePassword": "00000018F545DE818859FA43568DADCAA680CB7A16919C87545937793602DAB2674FFF28AEF5AE80",
+          "keyAlias": "releaseKey",
+          "keyPassword": "00000018C27C6F319F82347903A12A00D3DD914F547629BDD3D972011D09F701D055585228156C06",
+          "signAlg": "SHA256withECDSA",
+          "profile": "D:/RN/cert/release/release_UNI26087E9Release.p7b",
+          "certpath": "D:/RN/cert/release/release_UNI26087E9.cer"
         }
       }
     ],
@@ -19,21 +45,35 @@
       {
         "name": "default",
         "signingConfig": "default",
-        "compatibleSdkVersion": "5.0.5(17)",
-        "targetSdkVersion": "5.0.5(17)",
+        "targetSdkVersion": "6.0.0(20)",
+        "compatibleSdkVersion": "6.0.0(20)",
+        "compatibleSdkVersionStage": "beta6",
         "runtimeOS": "HarmonyOS",
         "buildOption": {
           "strictMode": {
             "caseSensitiveCheck": true,
             "useNormalizedOHMUrl": true
-          },
-          "nativeCompiler": "BiSheng"
+          }
+        }
+      },
+      {
+        "name": "release",
+        "signingConfig": "release",
+        "targetSdkVersion": "6.0.0(20)",
+        "compatibleSdkVersion": "6.0.0(20)",
+        "compatibleSdkVersionStage": "beta6",
+        "runtimeOS": "HarmonyOS",
+        "buildOption": {
+          "strictMode": {
+            "caseSensitiveCheck": true,
+            "useNormalizedOHMUrl": true
+          }
         }
       }
     ],
     "buildModeSet": [
       {
-        "name": "debug",
+        "name": "debug"
       },
       {
         "name": "release"
@@ -48,7 +88,8 @@
         {
           "name": "default",
           "applyToProducts": [
-            "default"
+            "default",
+            "release"
           ]
         }
       ]

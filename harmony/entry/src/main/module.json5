@@ -8,7 +8,7 @@
       {
         //todo AGC上项目配置的Client ID
         "name": "client_id",
-        "value": "6917570700073507923"
+        "value": "6917583036879765514"
       },
       {
         "name": 'ExecuteArkTSLinter',
@@ -32,9 +32,6 @@
     "requestPermissions": [
       {
         "name": "ohos.permission.INTERNET"
-      },
-      {
-        "name": "ohos.permission.FILE_ACCESS_PERSIST"
       },
       {
         "name": "ohos.permission.DISTRIBUTED_DATASYNC",
