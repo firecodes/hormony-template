@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RN WebView Bridge Test</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 12px;
+      color: #222;
+      background: #fff;
+    }
+
+    h2 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      color: #0A59F7;
+    }
+
+    p {
+      font-size: 12px;
+      line-height: 1.5;
+      margin: 4px 0;
+    }
+
+    button {
+      font-size: 12px;
+      padding: 6px 8px;
+      margin: 3px 3px 3px 0;
+      color: #fff;
+      background: #0A59F7;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #result {
+      margin-top: 8px;
+      padding: 8px;
+      min-height: 90px;
+      background: #f5f5f5;
+      border-radius: 6px;
+      font-size: 11px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    #rn-style-target {
+      margin-top: 10px;
+      padding: 10px;
+      text-align: center;
+      border-radius: 8px;
+      background: #eee;
+      color: #333;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>H5 Bridge Test Page</h2>
+  <p>用于验证 RN ↔ H5 双向通信、全局注入和消息回调。</p>
+
+  <button onclick="reportUA()">H5 获取 UA</button>
+  <button onclick="sendRaw()">H5 发 RAW 消息</button>
+  <button onclick="getUserInfo()">获取用户信息</button>
+  <button onclick="echo()">请求 RN ECHO</button>
+  <button onclick="goBack()">请求 RN 返回</button>
+  <button onclick="reportStatus()">上报注入状态</button>
+  <button onclick="callInjectedMethod()">调用注入的全局方法</button>
+  <button onclick="schemeFallback()">scheme 备用通道</button>
+
+  <div id="rn-style-target">全局样式注入测试文本</div>
+  <div id="result">等待操作...</div>
+
+  <script>
+    var ua = navigator.userAgent;
+
+    // 区分平台
+    var isIOS = /iPhone|iPad|iPod/.test(ua);
+    var isAndroid = /Android/.test(ua);
+
+    var nativeCallbackMap = {};
+    var resultBox = document.getElementById('result');
+
+    function append(text) {
+      resultBox.textContent += '\n' + text;
+    }
+
+    var len = 1;
+    function reportUA() {
+      console.log("reportUA ----", len++, ua , isIOS, isAndroid)
+      append('ua: ' + ua);
+    }
+    reportUA();
+
+    function report(type, data) {
+      var payload = {
+        type: type,
+        data: data || {},
+        ts: Date.now()
+      };
+      if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+        window.ReactNativeWebView.postMessage(JSON.stringify(payload));
+      }
+      append(type + ' 已上报');
+    }
+
+    window.__reportToRN = report;
+
+    window.initPage = function (params) {
+      append('initPage 被调用: ' + JSON.stringify(params));
+      report('INIT_PAGE_CALLED', params);
+      return {
+        code: 0,
+        msg: 'H5 initPage 执行完成',
+        received: params
+      };
+    };
+
+    window.onNativeReply = function (res) {
+      var cb = nativeCallbackMap[res.msgId];
+      if (cb) {
+        cb(res);
+        delete nativeCallbackMap[res.msgId];
+      }
+      append('RN 回复: ' + JSON.stringify(res));
+    };
+
+    function callNative(action, params) {
+      var msgId = Date.now() + '_' + Math.random().toString(36).slice(2);
+      return new Promise(function (resolve) {
+        nativeCallbackMap[msgId] = resolve;
+        if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+          window.ReactNativeWebView.postMessage(JSON.stringify({
+            type: 'NATIVE_ACTION',
+            action: action,
+            params: params || {},
+            msgId: msgId
+          }));
+        } else {
+          resolve({ code: -1, msg: '非 WebView 环境' });
+        }
+      });
+    }
+
+    function sendRaw() {
+      report('RAW_FROM_H5', { text: 'hello RN, this is raw message' });
+    }
+
+    function getUserInfo() {
+      callNative('GET_USER_INFO', { from: 'h5' }).then(function (res) {
+        append('用户信息: ' + JSON.stringify(res));
+      });
+    }
+
+    function echo() {
+      callNative('ECHO', { text: 'echo from h5' }).then(function (res) {
+        append('ECHO 结果: ' + JSON.stringify(res));
+      });
+    }
+
+    function goBack() {
+      callNative('BACK', { reason: 'h5 button' }).then(function (res) {
+        append('BACK 结果: ' + JSON.stringify(res));
+      });
+    }
+
+    function reportStatus() {
+      var target = document.getElementById('rn-style-target');
+      var computedBackground = target ? window.getComputedStyle(target).backgroundColor : '';
+      report('H5_STATUS', {
+        bridgeObject: !!window.AppBridge,
+        bridgeVersion: window.AppBridge && window.AppBridge.version,
+        globalMethod: typeof window.webBridgeGlobalMethod === 'function',
+        globalVariable: !!window.__APP_GLOBAL_VARS__,
+        globalVariableJson: window.__APP_GLOBAL_VARS__
+          ? JSON.stringify(window.__APP_GLOBAL_VARS__)
+          : '',
+        globalStyle: !!document.getElementById('__RN_TEST_STYLE__'),
+        styleApplied: computedBackground,
+        userAgent: ua
+      });
+    }
+
+    function callInjectedMethod() {
+      if (typeof window.webBridgeGlobalMethod === 'function') {
+        var res = window.webBridgeGlobalMethod({ from: 'h5', value: 42 });
+        append('注入方法返回: ' + JSON.stringify(res));
+        report('INJECTED_METHOD_CALLED', res);
+      } else {
+        append('注入方法不存在');
+        report('INJECTED_METHOD_MISSING', {});
+      }
+    }
+
+    function schemeFallback() {
+      var msgId = Date.now() + '_' + Math.random().toString(36).slice(2);
+      nativeCallbackMap[msgId] = function (res) {
+        append('scheme 回复: ' + JSON.stringify(res));
+      };
+      location.href = 'mybridge://action?action=SCHEME_ECHO&msgId=' +
+        encodeURIComponent(msgId) +
+        '&text=' + encodeURIComponent('hello scheme');
+    }
+
+    window.addEventListener('message', function (event) {
+      append('收到 RN postMessage: ' + event.data);
+      report('RN_POST_MESSAGE_RECEIVED', { data: event.data });
+    });
+
+    window.addEventListener('load', function () {
+      resultBox.textContent = '页面加载完成，等待 RN 注入...';
+      report('H5_READY', { url: location.href });
+    });
+  </script>
+</body>
+
+</html>

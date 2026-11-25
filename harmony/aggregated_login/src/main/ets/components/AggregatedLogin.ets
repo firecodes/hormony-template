@@ -30,19 +30,15 @@ export struct AggregatedLogin {
   })
   )
   @Param loginController: LoginController = new LoginController();
-  @Event handleLoginFail: (loginChannelType: LoginChannelType, error: LoginFailError) => void =
-    () => {
-    }
-  @Event obtainVerifyCode: () => Promise<void> = () => new Promise(() => {
-  });
+  @Event handleLoginFail: (loginChannelType: LoginChannelType, error: LoginFailError) => void = () => {}
+  @Event obtainVerifyCode: () => Promise<void> = () => new Promise(() => {});
 
   aboutToAppear(): void {
     this.vm.resetInstance()
     this.vm.getQuickLoginAnonymousPhone();
-    LoginEventDispatcher.loginFailCallback =
-      (loginChannelType: LoginChannelType, error: LoginFailError) => {
-        this.handleLoginFail(loginChannelType, error)
-      }
+    LoginEventDispatcher.loginFailCallback = (loginChannelType: LoginChannelType, error: LoginFailError) => {
+      this.handleLoginFail(loginChannelType, error)
+    }
     this.vm.setValue(this.isSheet, this.autoSheet, this.isPersistence, this.apiController, this.obtainVerifyCode)
   }
 

@@ -48,8 +48,7 @@ export class AggregatedLoginVM {
     new loginComponentManager.LoginWithHuaweiIDButtonController()
       // 需要用户同意协议才能完成华为账号登录，请先设置协议状态为NOT_ACCEPTED，当用户同意协议后设置协议状态为ACCEPTED，才可以完成华为账号登录
       .setAgreementStatus(loginComponentManager.AgreementStatus.NOT_ACCEPTED)
-      .onClickLoginWithHuaweiIDButton((error: BusinessError | undefined,
-        response: loginComponentManager.HuaweiIDCredential) => {
+      .onClickLoginWithHuaweiIDButton((error: BusinessError | undefined,response: loginComponentManager.HuaweiIDCredential) => {
         this.handleLoginWithHuaweiIDButton(error, response);
       });
 

@@ -76,6 +76,10 @@ interface Spec extends TurboModule {
   getDefaultAddress(callback: (address?: string) => void) : void
 
   isAddressExist(address: string) : boolean
+
+  getLaunchPayload(): string
+
+  getDefaultUserAgent(): string
 }
 
 let BridgeTurboModule = TurboModuleRegistry.get<Spec>(

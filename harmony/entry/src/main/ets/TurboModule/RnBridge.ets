@@ -19,6 +19,8 @@ import { BridgeOpenLinkModel } from '../model/BridgeOpenLinkModel';
 import { BridgeShareModel } from '../model/BridgeShareModel';
 import { KNOCK_PER } from '../utils/ShareManager';
 import { AddressDTO, Api } from 'address_management';
+import { LaunchPayloadHolder } from '../bridge/LaunchPayloadHolder';
+import { webview } from '@kit.ArkWeb';
 
 const TAG = 'RnBridge';
 
@@ -28,6 +30,8 @@ const ADDRESS_FORM_SHEET_PAGE_NAME = 'AddressFormSheetPage';
 const ADDRESS_FORM_SHEET_PAGE = 'pages/address/AddressFormSheetPage';
 const LOGIN_PAGE_NAME = 'Login';
 const LOGIN_PAGE = 'pages/login/LoginPage';
+const NATIVE_EVENT_SENDER_PAGE_NAME = 'NativeEventSender';
+const NATIVE_EVENT_SENDER_PAGE = 'pages/event/NativeEventSenderPage';
 
 export class RnBridge extends TurboModule implements TM.BridgeTurboModule.Spec {
   prePageName: string = ''
@@ -41,6 +45,8 @@ export class RnBridge extends TurboModule implements TM.BridgeTurboModule.Spec {
       url = (pageName === ADDRESS_LIST_PAGE_NAME) ? ADDRESS_LIST_PAGE : ADDRESS_FORM_SHEET_PAGE;
     } else if (pageName === LOGIN_PAGE_NAME) {
       url = LOGIN_PAGE;
+    } else if (pageName === NATIVE_EVENT_SENDER_PAGE_NAME) {
+      url = NATIVE_EVENT_SENDER_PAGE;
     } else {
       url = 'pages/Index';
     }
@@ -350,5 +356,21 @@ export class RnBridge extends TurboModule implements TM.BridgeTurboModule.Spec {
       return exist
     }
     return true;
+  }
+
+  getLaunchPayload(): string {
+    const payload = LaunchPayloadHolder.take();
+    return payload ? JSON.stringify(payload) : '';
+  }
+
+  getDefaultUserAgent(): string {
+    try {
+      webview.WebviewController.initializeWebEngine();
+      const defaultUA = webview.WebviewController.getDefaultUserAgent();
+      return defaultUA;
+    } catch (error) {
+      Logger.error(TAG, 'getDefaultUserAgent failed: ' + String(error));
+      return '';
+    }
   }
 }

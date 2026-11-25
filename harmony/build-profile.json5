@@ -19,22 +19,9 @@
         "type": "HarmonyOS",
         "material": {
           "storeFile": "D:/RN/cert/release/release_UNI26087E9.p12",
-          "storePassword": "00000018BEC0CC6C920F3E8515F927BBF9FE3A3A27C847E33646C9F7630961DC67AF2722262E5AB3",
+          "storePassword": "00000018B9B6939D20BCF8B0FA668EC903FC10A95203D5CC8AFA821C3E421AFA9E44B7F2EBDC333B",
           "keyAlias": "releaseKey",
-          "keyPassword": "0000001868F3E3BB32E66E209793F91259AED3E6B733A2E19C4F512665EF0ADE6F98C0196D7A6F9D",
-          "signAlg": "SHA256withECDSA",
-          "profile": "D:/RN/cert/release/release_UNI26087E9Release.p7b",
-          "certpath": "D:/RN/cert/release/release_UNI26087E9.cer"
-        }
-      },
-      {
-        "name": "ReleaseAPI",
-        "type": "HarmonyOS",
-        "material": {
-          "storeFile": "D:/RN/cert/release/release_UNI26087E9.p12",
-          "storePassword": "00000018F545DE818859FA43568DADCAA680CB7A16919C87545937793602DAB2674FFF28AEF5AE80",
-          "keyAlias": "releaseKey",
-          "keyPassword": "00000018C27C6F319F82347903A12A00D3DD914F547629BDD3D972011D09F701D055585228156C06",
+          "keyPassword": "00000018B7D1BED411E73364B7D2CD2088D0A459069E26C4933A17AD45BA807B38B61623A0B0E7E5",
           "signAlg": "SHA256withECDSA",
           "profile": "D:/RN/cert/release/release_UNI26087E9Release.p7b",
           "certpath": "D:/RN/cert/release/release_UNI26087E9.cer"
@@ -45,30 +32,9 @@
       {
         "name": "default",
         "signingConfig": "default",
-        "targetSdkVersion": "6.0.0(20)",
-        "compatibleSdkVersion": "6.0.0(20)",
-        "compatibleSdkVersionStage": "beta6",
+        "compatibleSdkVersion": "5.0.1(13)",
         "runtimeOS": "HarmonyOS",
-        "buildOption": {
-          "strictMode": {
-            "caseSensitiveCheck": true,
-            "useNormalizedOHMUrl": true
-          }
-        }
-      },
-      {
-        "name": "release",
-        "signingConfig": "release",
-        "targetSdkVersion": "6.0.0(20)",
-        "compatibleSdkVersion": "6.0.0(20)",
-        "compatibleSdkVersionStage": "beta6",
-        "runtimeOS": "HarmonyOS",
-        "buildOption": {
-          "strictMode": {
-            "caseSensitiveCheck": true,
-            "useNormalizedOHMUrl": true
-          }
-        }
+        "targetSdkVersion": "6.1.1(24)"
       }
     ],
     "buildModeSet": [
@@ -88,8 +54,7 @@
         {
           "name": "default",
           "applyToProducts": [
-            "default",
-            "release"
+            "default"
           ]
         }
       ]

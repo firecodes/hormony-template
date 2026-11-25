@@ -2,6 +2,7 @@
   "src": [
     "pages/Index",
     "pages/address/AddressListPage",
-    "pages/login/LoginPage"
+    "pages/login/LoginPage",
+    "pages/event/NativeEventSenderPage"
   ]
 }

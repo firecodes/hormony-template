@@ -77,3 +77,8 @@ yarn-error.log
 /harmony/.clang-format
 /harmony/.clang-tidy
 /harmony/**/.test
+/harmony/entry/oh_modules
+/harmony/entry/src/main/resources/rawfile
+/harmony/oh-package-lock.json5
+/harmony/entry/oh-package-lock.json5
+

@@ -35,6 +35,8 @@ BridgeTurboModule::BridgeTurboModule(const ArkTSTurboModule::Context ctx, const 
         ARK_METHOD_METADATA(requestPermission, 2),
         ARK_METHOD_METADATA(getDefaultAddress, 1),
         ARK_METHOD_METADATA(isAddressExist, 1),
+        ARK_METHOD_METADATA(getLaunchPayload, 0),
+        ARK_METHOD_METADATA(getDefaultUserAgent, 0),
     };
 }
 

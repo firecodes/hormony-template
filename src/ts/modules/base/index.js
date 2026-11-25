@@ -1,7 +1,11 @@
+import React from 'react';
 import {AppRegistry} from 'react-native';
+import {useBridgeEvents} from './bridge/useBridgeEvents';
 import RNSplashPage from './pages/RNSplashPage';
 import MainPage from './pages/main/MainPage';
 import SimpleWebPage from './pages/web/SimpleWebPage';
+import WebBridgeTestPage from './pages/web/WebBridgeTestPage';
+import NativeEventMonitorPage from './pages/event/NativeEventMonitorPage';
 import SearchPage from './pages/search/SearchPage';
 import DetailPage from './pages/detail/DetailPage';
 import CartPage from './pages/cart/CartPage';
@@ -33,44 +37,56 @@ import CategoryListPage from './pages/category/CategoryListPage';
 import ViewHistoryPage from './pages/profile/viewHistory/ViewHistoryPage';
 import {registerProvider} from './utils/AppProviderUtil';
 
+function register(name, getComponent) {
+  AppRegistry.registerComponent(name, () => {
+    const Component = getComponent();
+    return props => {
+      useBridgeEvents();
+      return React.createElement(Component, props);
+    };
+  });
+}
+
 //注册provider
 registerProvider();
 
-AppRegistry.registerComponent('Splash', () => RNSplashPage);
-AppRegistry.registerComponent('Main', () => MainPage);
-AppRegistry.registerComponent('Search', () => SearchPage);
-AppRegistry.registerComponent('Web', () => SimpleWebPage);
-AppRegistry.registerComponent('Detail', () => DetailPage);
-AppRegistry.registerComponent('Cart', () => CartPage);
-AppRegistry.registerComponent('Submit', () => OrderSubmitPage);
-AppRegistry.registerComponent('OrderInfo', () => OrderInfoPage);
-AppRegistry.registerComponent('Coupons', () => CouponsPage);
-AppRegistry.registerComponent('Category', () => CategoryPage);
-AppRegistry.registerComponent('CategoryList', () => CategoryListPage);
-AppRegistry.registerComponent('Collection', () => CollectionPage);
-AppRegistry.registerComponent('ProComd', () => ProductCommandPage);
-AppRegistry.registerComponent('AllEval', () => ProductAllEvalPage);
-AppRegistry.registerComponent('Service', () => ServicePage);
-AppRegistry.registerComponent('MyOrder', () => MyOrderPage);
-AppRegistry.registerComponent('PostEval', () => PostEvaluatePage);
-AppRegistry.registerComponent('LargeImage', () => LargeImageView);
+register('Splash', () => RNSplashPage);
+register('Main', () => MainPage);
+register('Search', () => SearchPage);
+register('Web', () => SimpleWebPage);
+register('WebBridgeTest', () => WebBridgeTestPage);
+register('NativeEventMonitor', () => NativeEventMonitorPage);
+register('Detail', () => DetailPage);
+register('Cart', () => CartPage);
+register('Submit', () => OrderSubmitPage);
+register('OrderInfo', () => OrderInfoPage);
+register('Coupons', () => CouponsPage);
+register('Category', () => CategoryPage);
+register('CategoryList', () => CategoryListPage);
+register('Collection', () => CollectionPage);
+register('ProComd', () => ProductCommandPage);
+register('AllEval', () => ProductAllEvalPage);
+register('Service', () => ServicePage);
+register('MyOrder', () => MyOrderPage);
+register('PostEval', () => PostEvaluatePage);
+register('LargeImage', () => LargeImageView);
 
 //
-AppRegistry.registerComponent('MyPointPage', () => MyPointPage);
-AppRegistry.registerComponent('MyPointDetailPage', () => MyPointDetailPage);
-AppRegistry.registerComponent('MyMessage', () => MyMessage);
-AppRegistry.registerComponent('MyMessageDetail', () => MyMessageDetail);
-AppRegistry.registerComponent('ViewHistory', () => ViewHistoryPage);
+register('MyPointPage', () => MyPointPage);
+register('MyPointDetailPage', () => MyPointDetailPage);
+register('MyMessage', () => MyMessage);
+register('MyMessageDetail', () => MyMessageDetail);
+register('ViewHistory', () => ViewHistoryPage);
 
 //UserInfo
-AppRegistry.registerComponent('FeedbackPage', () => FeedbackPage);
+register('FeedbackPage', () => FeedbackPage);
 
 //Setting
-AppRegistry.registerComponent('AboutPage', () => AboutPage);
-AppRegistry.registerComponent('AccountSafePage', () => AccountSafePage);
-AppRegistry.registerComponent('DeletePhonePage', () => DeletePhonePage);
-AppRegistry.registerComponent('PhoneNumPage', () => PhoneNumPage);
-AppRegistry.registerComponent('PrivacySettingPage', () => PrivacySettingPage);
-AppRegistry.registerComponent('SettingPage', () => SettingPage);
-AppRegistry.registerComponent('UpdatePhonePage', () => UpdatePhonePage);
-AppRegistry.registerComponent('UserInfoDetailPage', () => UserInfoDetailPage);
+register('AboutPage', () => AboutPage);
+register('AccountSafePage', () => AccountSafePage);
+register('DeletePhonePage', () => DeletePhonePage);
+register('PhoneNumPage', () => PhoneNumPage);
+register('PrivacySettingPage', () => PrivacySettingPage);
+register('SettingPage', () => SettingPage);
+register('UpdatePhonePage', () => UpdatePhonePage);
+register('UserInfoDetailPage', () => UserInfoDetailPage);

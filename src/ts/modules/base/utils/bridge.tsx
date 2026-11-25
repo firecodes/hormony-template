@@ -134,6 +134,26 @@ class Bridge2Native {
     return BridgeTurboModule.emitterEmit(key, param);
   }
 
+  getLaunchPayload(): Record<string, any> | null {
+    const raw = BridgeTurboModule.getLaunchPayload();
+    if (!raw) {
+      return null;
+    }
+    try {
+      return JSON.parse(raw);
+    } catch (e) {
+      return null;
+    }
+  }
+
+  getDefaultUserAgent(): string {
+    try {
+      return BridgeTurboModule.getDefaultUserAgent() || '';
+    } catch (e) {
+      return '';
+    }
+  }
+
   setStatusBarWhite(white: boolean) {
     BridgeTurboModule.setStatusBarWhite(white);
   }

@@ -1,6 +1,19 @@
 # UniversalTemplate_UnippAndRN
 
-
+import { webview } from '@kit.ArkWeb';
+private initAppUserAgent(): void {
+    try {
+    webview.WebviewController.initializeWebEngine();
+    const defaultUA = webview.WebviewController.getDefaultUserAgent();
+    const appUA = defaultUA + ' KaChe/111 Bridge/1.0';
+    webview.WebviewController.setAppCustomUserAgent(appUA);
+    AppStorage.setOrCreate('DEFAULT_WEB_USER_AGENT', defaultUA);
+    AppStorage.setOrCreate('APP_CUSTOM_USER_AGENT', appUA);
+    Logger.info(TAG, 'default web user agent: ' + defaultUA);
+    } catch (error) {
+    Logger.error(TAG, 'initAppUserAgent failed: ' + String(error));
+    }
+}
 
 ## Getting started
 

@@ -9,6 +9,14 @@ function RNSplashPage(props) {
     bridge.pushUrl('Web', JSON.stringify({webUrl: 'privacy_policy'}));
   };
 
+  const handleWebBridgeTestPress = () => {
+    bridge.pushUrl('WebBridgeTest', JSON.stringify({from: 'RNSplashPage'}));
+  };
+
+  const handleNativeEventTestPress = () => {
+    bridge.pushUrl('NativeEventMonitor', JSON.stringify({from: 'RNSplashPage'}));
+  };
+
   // 处理“同意”按钮点击
   const handleAgreePress = () => {
     bridge.setOhPrefData('access_agreement', 1);
@@ -29,6 +37,16 @@ function RNSplashPage(props) {
           style={styles.logoImage}
         />
         <Text style={styles.appNameTitle}>商城RN</Text>
+        <TouchableOpacity
+          style={styles.webBridgeTestButton}
+          onPress={handleWebBridgeTestPress}>
+          <Text style={styles.webBridgeTestButtonText}>WebView 双向通信测试</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.webBridgeTestButton, styles.nativeEventButton]}
+          onPress={handleNativeEventTestPress}>
+          <Text style={styles.webBridgeTestButtonText}>原生事件桥接测试</Text>
+        </TouchableOpacity>
       </View>
       <View style={styles.tips}>
         <Image
@@ -99,6 +117,22 @@ const styles = StyleSheet.create({
     fontSize: 25,
     fontWeight: '500',
     marginTop: 30,
+  },
+  webBridgeTestButton: {
+    marginTop: 16,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 16,
+    backgroundColor: '#0A59F7',
+  },
+  webBridgeTestButtonText: {
+    color: '#ffffff',
+    fontSize: 12,
+    fontWeight: '500',
+  },
+  nativeEventButton: {
+    backgroundColor: '#FF6A00',
+    marginTop: 8,
   },
   appDes: {
     fontSize: 15,
